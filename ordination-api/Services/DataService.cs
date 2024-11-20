@@ -173,7 +173,20 @@ public class DataService
     public string AnvendOrdination(int id, Dato dato)
     {
         // TODO: Implement!
-        return null!;
+        PN pn = db.PNs.Find(id);
+        bool test = pn.givDosis(dato);
+        db.SaveChanges();
+
+        if (test)
+        {
+            return "Dosis givet";
+        }
+        else
+        {
+            return "Dosis ikke givet";
+        }
+
+
     }
 
     /// <summary>
