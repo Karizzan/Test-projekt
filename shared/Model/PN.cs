@@ -2,15 +2,18 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace shared.Model;
 
-public class PN : Ordination {
-	public double antalEnheder { get; set; }
+public class PN : Ordination
+{
+    public double antalEnheder { get; set; }
     public List<Dato> dates { get; set; } = new List<Dato>();
 
-    public PN (DateTime startDen, DateTime slutDen, double antalEnheder, Laegemiddel laegemiddel) : base(laegemiddel, startDen, slutDen) {
-		this.antalEnheder = antalEnheder;
-	}
+    public PN(DateTime startDen, DateTime slutDen, double antalEnheder, Laegemiddel laegemiddel) : base(laegemiddel, startDen, slutDen)
+    {
+        this.antalEnheder = antalEnheder;
+    }
 
-    public PN() : base(null!, new DateTime(), new DateTime()) {
+    public PN() : base(null!, new DateTime(), new DateTime())
+    {
     }
 
     /// <summary>
@@ -64,11 +67,13 @@ public class PN : Ordination {
         return dates.Count() * antalEnheder;
     }
 
-    public int getAntalGangeGivet() {
+    public int getAntalGangeGivet()
+    {
         return dates.Count();
     }
 
-	public override String getType() {
-		return "PN";
-	}
+    public override String getType()
+    {
+        return "PN";
+    }
 }
