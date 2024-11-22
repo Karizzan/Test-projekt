@@ -199,7 +199,15 @@ public class DataService
 	public double GetAnbefaletDosisPerDøgn(int patientId, int laegemiddelId)
     {
         // TODO: Implement!
-        return -1;
+        Patient patient = db.Patienter.Find(patientId);
+        Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
+
+        double result = 0;
+        if (patient != null && laegemiddel != null)
+        {
+            result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnLet;
+        }
+        return result;
     }
 
 }
