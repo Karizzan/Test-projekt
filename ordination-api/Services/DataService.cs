@@ -140,16 +140,26 @@ public class DataService
 
     public PN OpretPN(int patientId, int laegemiddelId, double antal, DateTime startDato, DateTime slutDato)
     {
-        // TODO: Implement!
 
-        return null!;
+        Patient patient = db.Patienter.Find(patientId);
+        if (patient == null)
+        {
+            throw new ArgumentException("Patient not found");
+        }
+        Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
+
+        PN ordination = new PN(startDato, slutDato, antal, laegemiddel);
+
+        patient.ordinationer.Add(ordination);
+        db.SaveChanges();
+        return ordination;
     }
 
     public DagligFast OpretDagligFast(int patientId, int laegemiddelId,
         double antalMorgen, double antalMiddag, double antalAften, double antalNat,
         DateTime startDato, DateTime slutDato)
     {
-        // TODO: Implement!
+        
         Patient patient = db.Patienter.Find(patientId);
         if (patient == null)
         {
@@ -166,14 +176,38 @@ public class DataService
 
     public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato)
     {
-        // TODO: Implement!
-        return null!;
+
+        Patient patient = db.Patienter.Find(patientId);
+        if (patient == null)
+        {
+            throw new ArgumentException("Patient not found");
+        }
+        Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
+
+        DagligSkæv ordination = new DagligSkæv(startDato, slutDato, laegemiddel, doser);
+
+        patient.ordinationer.Add(ordination);
+        db.SaveChanges();
+        return ordination;
+
     }
 
     public string AnvendOrdination(int id, Dato dato)
     {
-        // TODO: Implement!
-        return null!;
+
+        PN pn = db.PNs.Find(id);
+        bool test = pn.givDosis(dato);
+        db.SaveChanges();
+
+        if (test)
+        {
+            return "Dosis givet";
+        }
+        else 
+        {
+            return "Dosis ikke givet";
+        }
+        
     }
 
     /// <summary>

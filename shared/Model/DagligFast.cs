@@ -29,7 +29,7 @@ public class DagligFast : Ordination
 
     public override double doegnDosis()
     {
-        // TODO: Implement!
+       
         return MorgenDosis.antal + MiddagDosis.antal + AftenDosis.antal + NatDosis.antal;
     }
 

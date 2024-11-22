@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace shared.Model;
 
 public class PN : Ordination {
@@ -17,14 +19,45 @@ public class PN : Ordination {
     /// Returner false ellers og datoen givesDen ignoreres
     /// </summary>
     public bool givDosis(Dato givesDen) {
-        // TODO: Implement!
+
+        if (givesDen.dato >= startDen && givesDen.dato <= slutDen)
+        {
+            dates.Add(givesDen);
+            return true;
+        }
         return false;
+
+
     }
 
     public override double doegnDosis() {
-    	// TODO: Implement!
-        return -1;
-    }
+        double sum = 0;
+
+        if (dates.Count > 0)
+        {
+            DateTime min = dates.First().dato;
+            DateTime max = dates.First().dato;
+
+            foreach (Dato d in dates)
+            {
+                if (d.dato < min)
+                {
+                    min = d.dato;
+                }
+                if (d.dato > max)
+                {
+                    max = d.dato;
+                }
+            }
+
+                int dage = (int)(max - min).TotalDays + 1;
+                sum = samletDosis() / dage;
+
+            }
+            return sum;
+
+        }
+    
 
 
     public override double samletDosis() {
