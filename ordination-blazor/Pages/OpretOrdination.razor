@@ -120,6 +120,7 @@
     }
 
     private void ClickOpret() {
+        if (patient != null && laegemiddel != null) {
         if (type == OrdinationType.PN) {
             PageState = State.OpretPN;
         } else if (type == OrdinationType.DagligFast) {
@@ -127,5 +128,6 @@
         } else if (type == OrdinationType.DagligSkaev) {
             PageState = State.OpretSkaev;
         }
+    }
     }
 }
