@@ -159,7 +159,7 @@ public class DataService
         double antalMorgen, double antalMiddag, double antalAften, double antalNat,
         DateTime startDato, DateTime slutDato)
     {
-
+        
         Patient patient = db.Patienter.Find(patientId);
         if (patient == null)
         {
@@ -203,11 +203,11 @@ public class DataService
         {
             return "Dosis givet";
         }
-        else
+        else 
         {
             return "Dosis ikke givet";
         }
-
+        
     }
 
     /// <summary>
@@ -219,24 +219,24 @@ public class DataService
     /// <returns></returns>
 	public double GetAnbefaletDosisPerDøgn(int patientId, int laegemiddelId)
     {
-        // TODO: Implement!
+        
         Patient patient = db.Patienter.Find(patientId);
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
         double result = 0;
         if (patient != null && laegemiddel != null)
         {
-            if (patient.vaegt >= 120)
-            {
-                result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnTung;
-            }
-            else if (patient.vaegt < 25)
+            if (patient.vaegt <25) 
             {
                 result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnLet;
             }
-            else
-            {
-                result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnNormal;
+            if (patient.vaegt >= 120) 
+            { 
+                result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnTung; 
+            }
+            else 
+            { 
+                result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnNormal; 
             }
         }
         return result;
