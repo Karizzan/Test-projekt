@@ -56,6 +56,21 @@ public class ServiceTest
         service.OpretDagligFast(-1, laegemiddel.LaegemiddelId,
             -1, -1, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
 
+        service.OpretDagligFast(patient1.PatientId, laegemiddel.LaegemiddelId,
+            -1, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
+
+        service.OpretDagligSkaev(-1, laegemiddel.LaegemiddelId,
+            new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2) },
+            DateTime.Now, DateTime.Now.AddDays(3));
+
+        service.OpretDagligSkaev(patient1.PatientId, laegemiddel.LaegemiddelId,
+            new Dosis[] { },
+            DateTime.Now, DateTime.Now.AddDays(3));
+
+        service.OpretPN(-1, laegemiddel.LaegemiddelId, -1, DateTime.Now, DateTime.Now.AddDays(3));
+
+        service.OpretPN(patient1.PatientId, laegemiddel.LaegemiddelId, -1, DateTime.Now, DateTime.Now.AddDays(3));
+
         Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
     }
 
