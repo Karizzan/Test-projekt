@@ -46,25 +46,6 @@ public class ServiceTest
     }
 
     [TestMethod]
-    public void OpretDagligSkæv()
-    {
-        Patient patient = service.GetPatienter().First();
-        Laegemiddel lm = service.GetLaegemidler().First();
-        Dosis doser = new Dosis();
-
-        Assert.AreEqual(1, service.GetDagligSkæve().Count());
-
-        DagligFast test = service.OpretDagligSkaev(patient.PatientId, lm.LaegemiddelId,
-           doser = , DateTime.Now, DateTime.Now.AddDays(3));
-
-        Assert.AreEqual(2, service.GetDagligFaste().Count());
-
-        Assert.AreEqual(20, test.samletDosis());
-
-        Assert.AreEqual(5, test.doegnDosis());
-    }
-
-    [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void TestAtKodenSmiderEnException()
     {
@@ -75,7 +56,7 @@ public class ServiceTest
         service.OpretDagligFast(-1, laegemiddel.LaegemiddelId,
             -1, -1, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
 
-    Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
+        Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
     }
 
     [TestMethod]
