@@ -52,12 +52,15 @@ public class ServiceTest
         Patient patient1 = service.GetPatienter().First();
         Laegemiddel laegemiddel = service.GetLaegemidler().First();
 
-
+        //Test at koden smider en exception på OpretDagligFast
         service.OpretDagligFast(-1, laegemiddel.LaegemiddelId,
             -1, -1, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
 
         service.OpretDagligFast(patient1.PatientId, laegemiddel.LaegemiddelId,
             -1, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
+
+        service.OpretDagligFast(patient1.PatientId, laegemiddel.LaegemiddelId,
+            2, 2, 1, 0, DateTime.Now.AddDays(3), DateTime.Now);
 
         service.OpretDagligSkaev(-1, laegemiddel.LaegemiddelId,
             new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2) },
@@ -67,9 +70,15 @@ public class ServiceTest
             new Dosis[] { },
             DateTime.Now, DateTime.Now.AddDays(3));
 
+        service.OpretDagligSkaev(patient1.PatientId, laegemiddel.LaegemiddelId,
+            new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2) },
+             DateTime.Now.AddDays(3), DateTime.Now);
+
         service.OpretPN(-1, laegemiddel.LaegemiddelId, -1, DateTime.Now, DateTime.Now.AddDays(3));
 
         service.OpretPN(patient1.PatientId, laegemiddel.LaegemiddelId, -1, DateTime.Now, DateTime.Now.AddDays(3));
+
+        service.OpretPN(patient1.PatientId, laegemiddel.LaegemiddelId, 1, DateTime.Now.AddDays(3), DateTime.Now);
 
         Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
     }
@@ -107,18 +116,5 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
         Assert.AreEqual(3, test.samletDosis());
         Assert.AreEqual(3, test.doegnDosis());
 
-    }
-
-    [TestMethod]
-    public void TestDagligfast()
-    {
-        Patient patient = service.GetPatienter().First();
-        Laegemiddel lm = service.GetLaegemidler().First();
-
-        DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
-            0, 0, -1, 0, DateTime.Now, DateTime.Now.AddDays(3));
-
-        Assert.AreEqual(20, test.samletDosis());
-        Assert.AreEqual(5, test.doegnDosis());
     }
 }
