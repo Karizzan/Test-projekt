@@ -216,10 +216,7 @@ public class DataService
             throw new ArgumentException("Start date is after end date");
         }
 
-        if (startDato > slutDato)
-        {
-            throw new ArgumentException("Start date must be before end date");
-        }
+       
 
 
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);

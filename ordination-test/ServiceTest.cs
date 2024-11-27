@@ -109,16 +109,38 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
 
     }
 
+
     [TestMethod]
-    public void TestDagligfast()
+    [ExpectedException(typeof(ArgumentException))]
+    public void TC1()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
-
         DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
-            0, 0, -1, 0, DateTime.Now, DateTime.Now.AddDays(3));
-
-        Assert.AreEqual(20, test.samletDosis());
-        Assert.AreEqual(5, test.doegnDosis());
+            -1, 0, 0, 0, DateTime.Now, DateTime.Now.AddDays(3));
+        
     }
-}
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void TC2()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+        DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
+            0, -1, 0, 0,DateTime.Now.AddDays(3), DateTime.Now );
+        
+    }
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void TC3()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+        DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
+            0, 0, -1, 0, DateTime.Now, DateTime.Now);
+        
+    }
+
+
+
+    }
