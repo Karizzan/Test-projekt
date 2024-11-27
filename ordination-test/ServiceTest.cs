@@ -35,19 +35,46 @@ public class ServiceTest
 
         Assert.AreEqual(1, service.GetDagligFaste().Count());
 
-        service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
+        DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
             2, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
 
         Assert.AreEqual(2, service.GetDagligFaste().Count());
+
+        Assert.AreEqual(20, test.samletDosis());
+
+        Assert.AreEqual(5, test.doegnDosis());
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
+    public void OpretDagligSkæv()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+        Dosis doser = new Dosis();
+
+        Assert.AreEqual(1, service.GetDagligSkæve().Count());
+
+        DagligFast test = service.OpretDagligSkaev(patient.PatientId, lm.LaegemiddelId,
+           doser = , DateTime.Now, DateTime.Now.AddDays(3));
+
+        Assert.AreEqual(2, service.GetDagligFaste().Count());
+
+        Assert.AreEqual(20, test.samletDosis());
+
+        Assert.AreEqual(5, test.doegnDosis());
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
     public void TestAtKodenSmiderEnException()
     {
-        // Herunder skal man så kalde noget kode,
-        // der smider en exception.
-        service.OpretDagligFast(-1, -1, 2, 2, 2, 0, DateTime.Now, DateTime.Now.AddDays(3));
+
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+
+
+        service.OpretDagligFast(-2, lm.LaegemiddelId,
+            4, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
 
         // Hvis koden _ikke_ smider en exception,
         // så fejler testen.
