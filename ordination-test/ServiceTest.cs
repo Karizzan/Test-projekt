@@ -68,17 +68,31 @@ public class ServiceTest
     [ExpectedException(typeof(ArgumentException))]
     public void TestAtKodenSmiderEnException()
     {
+        Patient patient1 = service.GetPatienter().First();
+        Laegemiddel laegemiddel = service.GetLaegemidler().First();
 
+
+        service.OpretDagligFast(-1, laegemiddel.LaegemiddelId,
+            -1, -1, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
+
+    Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
+    }
+
+    [TestMethod]
+    public void OpretDagligSkaev()
+    {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
+        Assert.AreEqual(1, service.GetDagligSkæve().Count());
+        DagligSkæv test = service.OpretDagligSkaev(patient.PatientId, lm.LaegemiddelId,
+new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2) },
+            DateTime.Now, DateTime.Now.AddDays(3));
 
 
-        service.OpretDagligFast(-2, lm.LaegemiddelId,
-            4, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
+        Assert.AreEqual(2, service.GetDagligSkæve().Count());
+        Assert.AreEqual(20, test.samletDosis());
+        Assert.AreEqual(5, test.doegnDosis());
 
-        // Hvis koden _ikke_ smider en exception,
-        // så fejler testen.
 
-        Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
     }
 }
