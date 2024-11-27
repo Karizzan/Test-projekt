@@ -151,6 +151,10 @@ public class DataService
         {
             throw new ArgumentException("Negative values not allowed");
         }
+        if (startDato > slutDato)
+        {
+            throw new ArgumentException("Start date must be before end date");
+        }
 
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
@@ -175,6 +179,11 @@ public class DataService
         {
             throw new ArgumentException("Negative values not allowed");
         }
+        if (startDato > slutDato)
+        {
+            throw new ArgumentException("Start date must be before end date");
+        }
+
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
         DagligFast ordination = new DagligFast(startDato, slutDato, laegemiddel, antalMorgen, antalMiddag, antalAften, antalNat);
@@ -196,6 +205,11 @@ public class DataService
         if (doser.Length == 0)
         {
             throw new ArgumentException("No doses given");
+        }
+
+        if (startDato > slutDato)
+        {
+            throw new ArgumentException("Start date must be before end date");
         }
 
 
