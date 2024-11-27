@@ -108,4 +108,17 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
         Assert.AreEqual(3, test.doegnDosis());
 
     }
+
+    [TestMethod]
+    public void TestDagligfast()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+
+        DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
+            0, 0, -1, 0, DateTime.Now, DateTime.Now.AddDays(3));
+
+        Assert.AreEqual(20, test.samletDosis());
+        Assert.AreEqual(5, test.doegnDosis());
+    }
 }
