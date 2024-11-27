@@ -38,22 +38,22 @@ public class PN : Ordination
 
         if (dates.Count > 0)
         {
-            DateTime min = dates.First().dato;
-            DateTime max = dates.First().dato;
+            DateTime min = dates.First().dato.Date;
+            DateTime max = dates.First().dato.Date;
 
             foreach (Dato d in dates)
             {
                 if (d.dato < min)
                 {
-                    min = d.dato;
+                    min = d.dato.Date;
                 }
-                if (d.dato > max)
+                if (d.dato.Date > max)
                 {
-                    max = d.dato;
+                    max = d.dato.Date;
                 }
             }
 
-                int dage = (int)(max - min).TotalDays + 1;
+                int dage = (max - min).Days + 1;
                 sum = samletDosis() / dage;
 
             }
