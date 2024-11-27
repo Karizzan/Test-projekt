@@ -182,6 +182,7 @@ public class DataService
         {
             throw new ArgumentException("Patient not found");
         }
+
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
         DagligSkæv ordination = new DagligSkæv(startDato, slutDato, laegemiddel, doser);
