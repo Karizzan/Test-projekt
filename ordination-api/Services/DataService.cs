@@ -147,7 +147,7 @@ public class DataService
             throw new ArgumentException("Patient not found");
         }
 
-        if (antal < 0)
+        if (antal < 1)
         {
             throw new ArgumentException("Negative values not allowed");
         }
@@ -180,7 +180,7 @@ public class DataService
         {
             throw new ArgumentException("Patient not found");
         }
-        if (antalMorgen < 0 || antalMiddag < 0 || antalAften < 0 || antalNat < 0)
+        if (antalMorgen < 1 || antalMiddag < 1 || antalAften < 1 || antalNat < 1)
         {
             throw new ArgumentException("Negative values not allowed");
         }
