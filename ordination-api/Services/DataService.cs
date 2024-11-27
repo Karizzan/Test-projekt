@@ -4,6 +4,7 @@ using System.Text.Json;
 using shared.Model;
 using static shared.Util;
 using Data;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Service;
 
@@ -180,9 +181,17 @@ public class DataService
         {
             throw new ArgumentException("Patient not found");
         }
-        if (antalMorgen < 1 || antalMiddag < 1 || antalAften < 1 || antalNat < 1)
+
+        if (antalMorgen < 0 || antalMiddag < 0 || antalAften < 0 || antalNat < 0)
         {
             throw new ArgumentException("Negative values not allowed");
+        }
+
+        int sum = (int)(antalMorgen + antalMiddag + antalAften + antalNat);
+
+        if (sum == 0)
+        {
+            throw new ArgumentException("No doses given");
         }
 
         if (startDato > slutDato)
@@ -216,7 +225,7 @@ public class DataService
             throw new ArgumentException("Start date is after end date");
         }
 
-       
+
 
 
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
