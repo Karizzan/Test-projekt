@@ -180,9 +180,16 @@ public class DataService
         {
             throw new ArgumentException("Patient not found");
         }
-        if (antalMorgen < 1 || antalMiddag < 1 || antalAften < 1 || antalNat < 1)
+        if (antalMorgen < 0 || antalMiddag < 0 || antalAften < 0 || antalNat < 0)
         {
             throw new ArgumentException("Negative values not allowed");
+        }
+
+        int sum = (int)(antalMorgen + antalMiddag + antalAften + antalNat);
+
+        if (sum == 0)
+        {
+            throw new ArgumentException("No doses given");
         }
 
         if (startDato > slutDato)
