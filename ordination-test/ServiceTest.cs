@@ -74,6 +74,23 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
         Assert.AreEqual(20, test.samletDosis());
         Assert.AreEqual(5, test.doegnDosis());
 
+    }
+
+    [TestMethod]
+    public void OpretPN()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+        Assert.AreEqual(4, service.GetPNs().Count());
+        PN test = service.OpretPN(patient.PatientId, lm.LaegemiddelId, 3, DateTime.Now, DateTime.Now.AddDays(3));
+
+        Dato dato1 = new Dato();
+        dato1.dato = DateTime.Now;
+
+        test.givDosis(dato1);
+        Assert.AreEqual(5, service.GetPNs().Count());
+        Assert.AreEqual(3, test.samletDosis());
+        Assert.AreEqual(3, test.doegnDosis());
 
     }
 }

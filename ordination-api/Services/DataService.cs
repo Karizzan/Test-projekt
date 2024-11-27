@@ -146,6 +146,12 @@ public class DataService
         {
             throw new ArgumentException("Patient not found");
         }
+
+        if (antal < 0)
+        {
+            throw new ArgumentException("Negative values not allowed");
+        }
+
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
         PN ordination = new PN(startDato, slutDato, antal, laegemiddel);
@@ -165,6 +171,10 @@ public class DataService
         {
             throw new ArgumentException("Patient not found");
         }
+        if (antalMorgen < 0 || antalMiddag < 0 || antalAften < 0 || antalNat < 0)
+        {
+            throw new ArgumentException("Negative values not allowed");
+        }
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
         DagligFast ordination = new DagligFast(startDato, slutDato, laegemiddel, antalMorgen, antalMiddag, antalAften, antalNat);
@@ -182,6 +192,12 @@ public class DataService
         {
             throw new ArgumentException("Patient not found");
         }
+
+        if (doser.Length == 0)
+        {
+            throw new ArgumentException("No doses given");
+        }
+
 
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
