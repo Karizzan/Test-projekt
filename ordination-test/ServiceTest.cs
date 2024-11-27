@@ -56,7 +56,7 @@ public class ServiceTest
         service.OpretDagligFast(-1, laegemiddel.LaegemiddelId,
             -1, -1, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
 
-    Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
+        Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
     }
 
     [TestMethod]
