@@ -156,6 +156,11 @@ public class DataService
             throw new ArgumentException("Start date must be before end date");
         }
 
+        if (startDato > slutDato)
+        {
+            throw new ArgumentException("Start date is after end date");
+        }
+
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
         PN ordination = new PN(startDato, slutDato, antal, laegemiddel);
@@ -169,7 +174,7 @@ public class DataService
         double antalMorgen, double antalMiddag, double antalAften, double antalNat,
         DateTime startDato, DateTime slutDato)
     {
-        
+
         Patient patient = db.Patienter.Find(patientId);
         if (patient == null)
         {
@@ -179,11 +184,11 @@ public class DataService
         {
             throw new ArgumentException("Negative values not allowed");
         }
+
         if (startDato > slutDato)
         {
-            throw new ArgumentException("Start date must be before end date");
+            throw new ArgumentException("Start date is after end date");
         }
-
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
         DagligFast ordination = new DagligFast(startDato, slutDato, laegemiddel, antalMorgen, antalMiddag, antalAften, antalNat);
@@ -205,6 +210,10 @@ public class DataService
         if (doser.Length == 0)
         {
             throw new ArgumentException("No doses given");
+        }
+        if (startDato > slutDato)
+        {
+            throw new ArgumentException("Start date is after end date");
         }
 
         if (startDato > slutDato)
@@ -234,11 +243,11 @@ public class DataService
         {
             return "Dosis givet";
         }
-        else 
+        else
         {
             return "Dosis ikke givet";
         }
-        
+
     }
 
     /// <summary>
@@ -250,24 +259,24 @@ public class DataService
     /// <returns></returns>
 	public double GetAnbefaletDosisPerDøgn(int patientId, int laegemiddelId)
     {
-        
+
         Patient patient = db.Patienter.Find(patientId);
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
         double result = 0;
         if (patient != null && laegemiddel != null)
         {
-            if (patient.vaegt <25) 
+            if (patient.vaegt < 25)
             {
                 result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnLet;
             }
-            if (patient.vaegt >= 120) 
-            { 
-                result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnTung; 
+            if (patient.vaegt >= 120)
+            {
+                result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnTung;
             }
-            else 
-            { 
-                result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnNormal; 
+            else
+            {
+                result = patient.vaegt * laegemiddel.enhedPrKgPrDoegnNormal;
             }
         }
         return result;
