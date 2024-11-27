@@ -4,6 +4,7 @@ using System.Text.Json;
 using shared.Model;
 using static shared.Util;
 using Data;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Service;
 
@@ -223,7 +224,7 @@ public class DataService
             throw new ArgumentException("Start date is after end date");
         }
 
-       
+
 
 
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);

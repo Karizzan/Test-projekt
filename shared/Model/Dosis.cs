@@ -10,6 +10,11 @@ public class Dosis
     {
         this.tid = tid;
         this.antal = antal;
+
+        if (antal < 0)
+        {
+            throw new ArgumentException("Antal må ikke være negativt");
+        }
     }
 
     public Dosis()
