@@ -47,6 +47,7 @@ public class ServiceTest
     {
         // Herunder skal man så kalde noget kode,
         // der smider en exception.
+        service.OpretDagligFast(-1, -1, 2, 2, 2, 0, DateTime.Now, DateTime.Now.AddDays(3));
 
         // Hvis koden _ikke_ smider en exception,
         // så fejler testen.
