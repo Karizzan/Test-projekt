@@ -150,6 +150,35 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
         
     }
 
-
+    public void TC4()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+        DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
+            0, 0, 0, 0, DateTime.Now, DateTime.Now.AddDays(3));
 
     }
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void TC5()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+        DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
+            0, 0, 0, 0, DateTime.Now.AddDays(3), DateTime.Now);
+
+    }
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void TC6()
+    {
+        Patient patient = service.GetPatienter().First();
+        Laegemiddel lm = service.GetLaegemidler().First();
+        DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
+            0, 0, 0, 0, DateTime.Now, DateTime.Now);
+
+    }
+
+
+
+}
