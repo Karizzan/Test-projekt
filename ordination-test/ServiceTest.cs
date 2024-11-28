@@ -353,7 +353,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void TC31()
+    public void TC25()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
@@ -363,7 +363,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void TC32()
+    public void TC26()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
@@ -373,7 +373,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void TC33()
+    public void TC27()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
@@ -383,7 +383,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void TC34()
+    public void TC28()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
@@ -391,7 +391,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
 
     }
 
-    public void TC35()
+    public void TC29()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
@@ -401,7 +401,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void TC36()
+    public void TC30()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
@@ -410,7 +410,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     }
 
     [TestMethod]
-    public void TC37()
+    public void TC31()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
@@ -421,7 +421,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void TC38()
+    public void TC32()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
@@ -430,7 +430,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     }
 
     [TestMethod]
-    public void TC39()
+    public void TC33()
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
