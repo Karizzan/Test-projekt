@@ -33,12 +33,14 @@ public class ServiceTest
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
 
+        int antalDagligFastEfterTest = (service.GetDagligFaste().Count() + 1);
+
         Assert.AreEqual(1, service.GetDagligFaste().Count());
 
         DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
             2, 2, 1, 0, DateTime.Now, DateTime.Now.AddDays(3));
 
-        Assert.AreEqual(2, service.GetDagligFaste().Count());
+        Assert.AreEqual(antalDagligFastEfterTest, service.GetDagligFaste().Count());
 
         Assert.AreEqual(20, test.samletDosis());
 
@@ -105,14 +107,15 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
-        Assert.AreEqual(4, service.GetPNs().Count());
+        int antalEfterTest = (service.GetPNs().Count() + 1);
+        
         PN test = service.OpretPN(patient.PatientId, lm.LaegemiddelId, 3, DateTime.Now, DateTime.Now.AddDays(3));
 
         Dato dato1 = new Dato();
         dato1.dato = DateTime.Now;
 
         test.givDosis(dato1);
-        Assert.AreEqual(5, service.GetPNs().Count());
+        Assert.AreEqual(antalEfterTest, service.GetPNs().Count());
         Assert.AreEqual(3, test.samletDosis());
         Assert.AreEqual(3, test.doegnDosis());
 
@@ -186,9 +189,10 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
+        int antalEfterTest = (service.GetDagligFaste().Count() + 1);
         DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
             1, 1, 1, 1, DateTime.Now, DateTime.Now.AddDays(3));
-        Assert.AreEqual(5, service.GetDagligFaste().Count());
+        Assert.AreEqual(antalEfterTest, service.GetDagligFaste().Count());
     }
 
     [TestMethod]
@@ -206,9 +210,10 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
+        int antalEfterTest = (service.GetDagligFaste().Count() + 1);
         DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
             2, 1, 0, 0, DateTime.Now, DateTime.Now);
-        Assert.AreEqual(6, service.GetDagligFaste().Count());
+        Assert.AreEqual(antalEfterTest, service.GetDagligFaste().Count());
     }
 
     [TestMethod]
@@ -216,9 +221,10 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
+        int antalEfterTest = (service.GetDagligFaste().Count() + 1);
         DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
             1, 7, 1, 7, DateTime.Now, DateTime.Now.AddDays(3));
-        Assert.AreEqual(3, service.GetDagligFaste().Count());
+        Assert.AreEqual(antalEfterTest, service.GetDagligFaste().Count());
     }
 
     [TestMethod]
@@ -236,9 +242,10 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
+        int antalEfterTest = (service.GetDagligFaste().Count() + 1);
         DagligFast test = service.OpretDagligFast(patient.PatientId, lm.LaegemiddelId,
             2, 1, 4, 4, DateTime.Now, DateTime.Now);
-        Assert.AreEqual(4, service.GetDagligFaste().Count());
+        Assert.AreEqual(antalEfterTest, service.GetDagligFaste().Count());
     }
 
 
@@ -321,10 +328,13 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
+        int antalEfterTest = (service.GetDagligSkæve().Count() + 1);
 
         DagligSkæv test = service.OpretDagligSkaev(patient.PatientId, lm.LaegemiddelId,
         new Dosis[] { new Dosis(DateTime.Now, 1), new Dosis(DateTime.Now.AddHours(6), 0) },
         DateTime.Now, DateTime.Now.AddDays(3));
+
+        Assert.AreEqual(antalEfterTest, service.GetDagligSkæve().Count());
     }
 
     [TestMethod]
@@ -337,6 +347,8 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
         DagligSkæv test = service.OpretDagligSkaev(patient.PatientId, lm.LaegemiddelId,
         new Dosis[] { new Dosis(DateTime.Now, 1), new Dosis(DateTime.Now.AddHours(6), 0) },
         DateTime.Now.AddDays(3), DateTime.Now);
+
+
     }
 
     [TestMethod]
@@ -345,9 +357,13 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
 
+        int antalEfterTest = (service.GetDagligSkæve().Count() + 1);
+
         DagligSkæv test = service.OpretDagligSkaev(patient.PatientId, lm.LaegemiddelId,
         new Dosis[] { new Dosis(DateTime.Now, 1), new Dosis(DateTime.Now.AddHours(6), 0) },
         DateTime.Now, DateTime.Now);
+
+        Assert.AreEqual(antalEfterTest, service.GetDagligSkæve().Count());
     }
 
 
@@ -416,7 +432,16 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
+
+        int antalEfterTest = (service.GetPNs().Count() + 1);
+
         PN test = service.OpretPN(patient.PatientId, lm.LaegemiddelId, 1, DateTime.Now, DateTime.Now.AddDays(3));
+
+        Dato dato1 = new Dato();
+        dato1.dato = DateTime.Now;
+
+        test.givDosis(dato1);
+        Assert.AreEqual(antalEfterTest, service.GetPNs().Count());
 
     }
 
@@ -436,7 +461,17 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
     {
         Patient patient = service.GetPatienter().First();
         Laegemiddel lm = service.GetLaegemidler().First();
+
+        int antalEfterTest = (service.GetPNs().Count() + 1);
+
         PN test = service.OpretPN(patient.PatientId, lm.LaegemiddelId, 1, DateTime.Now, DateTime.Now);
+
+        Dato dato1 = new Dato();
+        dato1.dato = DateTime.Now;
+
+        test.givDosis(dato1);
+        Assert.AreEqual(antalEfterTest, service.GetPNs().Count());
+
 
     }
 
