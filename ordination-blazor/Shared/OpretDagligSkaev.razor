@@ -14,21 +14,21 @@
         <div class="form-group row">
             <label for="laegemiddel" class="col-sm-4 col-form-label">Lægemiddel</label>
             <div class="col-sm-8">
-            <input readonly type="text" class="form-control" id="laegemiddel" value=@laegemiddel?.navn>
+                <input readonly type="text" class="form-control" id="laegemiddel" value=@laegemiddel?.navn>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="startdato" class="col-sm-4 col-form-label">Startdato for ordination</label>
             <div class="col-sm-8">
-            <input @bind="StartDato" type="date" class="form-control" id="startdato">
+                <input @bind="StartDato" type="date" class="form-control" id="startdato">
             </div>
         </div>
 
         <div class="form-group row">
             <label for="slutdato" class="col-sm-4 col-form-label">Slutdato for ordination</label>
             <div class="col-sm-8">
-            <input @bind="SlutDato" type="date" class="form-control" id="slutdato">
+                <input @bind="SlutDato" type="date" class="form-control" id="slutdato">
             </div>
         </div>
 
@@ -38,15 +38,16 @@
                 <input readonly type="text" class="form-control" id="anbefalet-enheder" value=@AnbefaletDosisPerDøgnRounded>
             </div>
         </div>
-    </div>    
-    <div class="row mt-4">  
+    </div>
+
+    <div class="row mt-4">
         <div class="form-group row">
             <div class="col-sm-2"></div>
             <div class="col-sm-4">
-            <input @bind="Tid" type="time" class="form-control" id="dosis-tid">
+                <input @bind="Tid" type="time" class="form-control" id="dosis-tid">
             </div>
             <div class="col-sm-4">
-            <input @bind="Antal" type="number" class="form-control" id="dosis-antal" placeholder="Mængde">
+                <input @bind="Antal" type="number" class="form-control" id="dosis-antal" placeholder="Mængde">
             </div>
             <div class="col-sm-2">
                 <button class="btn btn-primary" @onclick="OpretDosis">Opret dosis</button>
@@ -69,11 +70,11 @@
         </div>
     </div>
 
-    <div class="row mt-4">   
+    <div class="row mt-4">
         <div class="form-group row">
             <div class="col-sm-8">
-            <button class="btn btn-primary" @onclick="Opret">Opret ordination</button>
-            <button class="btn btn-secondary" @onclick="() => onFortryd?.Invoke()">Fortryd</button>
+                <button class="btn btn-primary" @onclick="Opret">Opret ordination</button>
+                <button class="btn btn-secondary" @onclick="() => onFortryd?.Invoke()">Fortryd</button>
             </div>
         </div>
     </div>
@@ -99,21 +100,52 @@
     private TimeOnly Tid { get; set; }
     private int Antal { get; set; }
 
-    private async void Opret() {
-        if (Patient == null || laegemiddel == null) {
-            return;
+    private async void Opret()
+    {
+        try
+        {
+            if (Patient == null || laegemiddel == null)
+            {
+                throw new InvalidOperationException("Patient eller lægemiddel mangler.");
+            }
+            Console.WriteLine("Opret");
+            var ordination = await apiService.OpretDagligSkaev(Patient.id, laegemiddel.LaegemiddelId, doser.ToArray(), StartDato, SlutDato);
+            Console.WriteLine("Oprettet!");
+            Console.WriteLine(ordination);
+            onDone?.Invoke($"Oprettet Daglig Skæv ordination for {Patient.navn}!");
         }
-        Console.WriteLine("Opret");
-        var ordination = await apiService.OpretDagligSkaev(Patient.id, laegemiddel.LaegemiddelId, doser.ToArray(), StartDato, SlutDato);
-        Console.WriteLine("Oprettet!");
-        Console.WriteLine(ordination);
-        onDone?.Invoke($"Oprettet Daglig Skæv ordination for {Patient.navn}!");
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fejl: {ex.Message}");
+           
+        }
     }
 
-    private void OpretDosis() {
-        Console.WriteLine(Tid);
-        Console.WriteLine(Antal);
-        doser.Add(new Dosis(Util.CreateTimeOnly(Tid), Antal));
+    private void OpretDosis()
+    {
+        try
+        {
+            if (Tid == null || Antal <= 0)
+            {
+                throw new InvalidOperationException("Tid og antal skal være gyldige.");
+            }
+
+            Console.WriteLine(Tid);
+            Console.WriteLine(Antal);
+
+           
+            doser.Add(new Dosis(Util.CreateTimeOnly(Tid), Antal));
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine($"Fejl: {ex.Message}");
+            
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Uventet fejl: {ex.Message}");
+            
+        }
     }
 
 }

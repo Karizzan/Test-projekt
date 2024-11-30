@@ -13,21 +13,21 @@
         <div class="form-group row">
             <label for="laegemiddel" class="col-sm-4 col-form-label">Lægemiddel</label>
             <div class="col-sm-8">
-            <input readonly type="text" class="form-control" id="laegemiddel" value=@laegemiddel?.navn>
+                <input readonly type="text" class="form-control" id="laegemiddel" value=@laegemiddel?.navn>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="startdato" class="col-sm-4 col-form-label">Startdato for ordination</label>
             <div class="col-sm-8">
-            <input @bind="StartDato" type="date" class="form-control" id="startdato">
+                <input @bind="StartDato" type="date" class="form-control" id="startdato">
             </div>
         </div>
 
         <div class="form-group row">
             <label for="slutdato" class="col-sm-4 col-form-label">Slutdato for ordination</label>
             <div class="col-sm-8">
-            <input @bind="SlutDato" type="date" class="form-control" id="slutdato">
+                <input @bind="SlutDato" type="date" class="form-control" id="slutdato">
             </div>
         </div>
 
@@ -41,13 +41,13 @@
         <div class="form-group row">
             <label for="antal-enheder" class="col-sm-4 col-form-label">Antal enheder (styk):</label>
             <div class="col-sm-8">
-            <input @bind="antalEnheder" type="number" class="form-control" id="antal-enheder">
+                <input @bind="antalEnheder" type="number" class="form-control" id="antal-enheder">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-sm-8">
-            <button class="btn btn-primary" @onclick="Opret">Opret ordination</button>
-            <button class="btn btn-secondary" @onclick="() => onFortryd?.Invoke()">Fortryd</button>
+                <button class="btn btn-primary" @onclick="Opret">Opret ordination</button>
+                <button class="btn btn-secondary" @onclick="() => onFortryd?.Invoke()">Fortryd</button>
             </div>
         </div>
     </div>
@@ -70,15 +70,24 @@
     private DateTime StartDato { get; set; } = DateTime.Now;
     private DateTime SlutDato { get; set; } = DateTime.Now.AddDays(3);
 
-    private async void Opret() {
-        if (Patient == null || laegemiddel == null) {
-            return;
+    private async Task Opret()
+    {
+        try
+        {
+            if (Patient == null || laegemiddel == null)
+            {
+                throw new InvalidOperationException("Patient eller lægemiddel mangler.");
+            }
+            Console.WriteLine("Opret");
+            PN pn = await apiService.OpretPN(Patient.id, laegemiddel.LaegemiddelId, antalEnheder, StartDato, SlutDato);
+            Console.WriteLine("Oprettet!");
+            Console.WriteLine(pn);
+            onDone?.Invoke($"Oprettet PN ordination for {Patient.navn}!");
         }
-        Console.WriteLine("Opret");
-        PN pn = await apiService.OpretPN(Patient.id, laegemiddel.LaegemiddelId, antalEnheder, StartDato, SlutDato);
-        Console.WriteLine("Oprettet!");
-        Console.WriteLine(pn);
-        onDone?.Invoke($"Oprettet PN ordination for {Patient.navn}!");
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fejl: {ex.Message}");
+            
+        }
     }
-
 }
