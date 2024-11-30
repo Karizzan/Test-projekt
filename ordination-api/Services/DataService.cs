@@ -208,7 +208,6 @@ public class DataService
 
     public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato)
     {
-
         Patient patient = db.Patienter.Find(patientId);
         if (patient == null)
         {
@@ -219,13 +218,20 @@ public class DataService
         {
             throw new ArgumentException("No doses given");
         }
+
+        
+        foreach (var dosis in doser)
+        {
+            if (dosis.antal < 1)
+            {
+                throw new ArgumentException("Dose amount cannot be 0");
+            }
+        }
+
         if (startDato > slutDato)
         {
             throw new ArgumentException("Start date is after end date");
         }
-
-
-
 
         Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId);
 
@@ -234,8 +240,8 @@ public class DataService
         patient.ordinationer.Add(ordination);
         db.SaveChanges();
         return ordination;
-
     }
+
 
     public string AnvendOrdination(int id, Dato dato)
     {

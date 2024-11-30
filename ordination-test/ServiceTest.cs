@@ -331,7 +331,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
         int antalEfterTest = (service.GetDagligSkæve().Count() + 1);
 
         DagligSkæv test = service.OpretDagligSkaev(patient.PatientId, lm.LaegemiddelId,
-        new Dosis[] { new Dosis(DateTime.Now, 1), new Dosis(DateTime.Now.AddHours(6), 0) },
+        new Dosis[] { new Dosis(DateTime.Now, 1), new Dosis(DateTime.Now.AddHours(6), 2) },
         DateTime.Now, DateTime.Now.AddDays(3));
 
         Assert.AreEqual(antalEfterTest, service.GetDagligSkæve().Count());
@@ -360,7 +360,7 @@ new Dosis[] { new Dosis(DateTime.Now, 3), new Dosis(DateTime.Now.AddHours(6), 2)
         int antalEfterTest = (service.GetDagligSkæve().Count() + 1);
 
         DagligSkæv test = service.OpretDagligSkaev(patient.PatientId, lm.LaegemiddelId,
-        new Dosis[] { new Dosis(DateTime.Now, 1), new Dosis(DateTime.Now.AddHours(6), 0) },
+        new Dosis[] { new Dosis(DateTime.Now, 1), new Dosis(DateTime.Now.AddHours(6), 2) },
         DateTime.Now, DateTime.Now);
 
         Assert.AreEqual(antalEfterTest, service.GetDagligSkæve().Count());

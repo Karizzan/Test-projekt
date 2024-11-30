@@ -29,7 +29,7 @@ public class DagligSkæv : Ordination
 
     public override double doegnDosis()
     {
-        // TODO: Implement!
+       
         double sum = 0;
         foreach (Dosis dosis in doser)
         {
